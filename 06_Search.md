@@ -45,7 +45,7 @@ $results = $search->get();
 Search operations return a `SearchResult` object containing information about the search and the results returned by the query.
 
 By default the following information is available:
-- `totalHits`, total number of hits found for the query, can be accessed.
+- `totalHits`, total number of hits found for the query.
 - `maxScore`, the maximum score value of the document with the highest score.
 - `took`, the execution time of the query in ms.
 - `timedOut`, indicating if a query timed out.
