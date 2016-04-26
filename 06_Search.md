@@ -68,7 +68,7 @@ This implies a certain overhead to fetch and create the model instances.
 $models = $results->getModels();
 ```
 
-`getModels` by default automatically uses eager loading for the index relationships specified in the `$indexRelations` property.
+`getModels` by default automatically uses eager loading for the index relationships specified in the `indexRelations` property.
 The first parameter of the method accepts an array of eagerly loaded relationships if you do not want to use eager loading or if you want to specify your own eagerly loaded relationships.
 ```php
 $models = $results->getModels(['company'])
