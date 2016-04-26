@@ -62,15 +62,16 @@ This gives you the opportunity to work with the documents returned by the index 
 
 
 ### Getting Eloquent Models for a Search Result
-If you need the Eloquent model instances instead of their documents you may use the `getItems` method on the search result instance.
+If you need the Eloquent model instances instead of their documents you may use the `getModels` method on the search result instance.
 This implies a certain overhead to fetch and create the model instances.
 ```php
-$models = $results->getItems();
+$models = $results->getModels();
 ```
 
-`getItems` also accepts an array parameter for eager loading of relationships.
+`getModels` by default automatically uses eager loading for the index relationships specified in the `$indexRelations` property.
+The first parameter of the method accepts an array of eagerly loaded relationships if you do not want to use eager loading or if you want to specify your own eagerly loaded relationships.
 ```php
-$models = $results->getItems(['company'])
+$models = $results->getModels(['company'])
 ```
 
 Note that the models created will not contain any metadata returned by the search with the exception for the score value and the document version.
