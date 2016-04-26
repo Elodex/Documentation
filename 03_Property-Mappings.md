@@ -64,12 +64,72 @@ But there's hardly any use case in which you would not want to use an explicit m
 
 
 ## Property Mappings for Relationships
-All property mappings for the relationships of a model are defined and created by the parent.
+All property mappings for the relationships of a model are created by the parent class.
 Using the `IndexedModel` trait on a related model class is not needed and will have no effect on the mappings created by the parent for this relationship.
-I.e. a parent never calls `getIndexMappingProperties` on related models even if they implement this method.
+I.e. all logic to create mappings is solely in the parent class, a parent never calls `getIndexMappingProperties` on related models even if they implement this method.
 
-You can however define a `indexMappingProperties` on your related model class which (if existent) will be used by the parent.
-Even though this is not really necessary since you could as well directly define any custom property mappings of your relationships in the `indexMappingProperties` of your parent.
+You can however define custom mappings with a `indexMappingProperties` property on your related model class which will then be used by the parent.
+This way you can add or overwrite single field mappings of related models.
+```php
+class Parent extends ElodexModel
+{
+    protected $casts = ['street' => 'string'];
+    protected $indexRelations = ['related'];
+}
+
+class Related extends EloquentModel
+{
+    protected $casts = ['foo' => 'integer'];
+    protected $indexMappingProperties = [
+      'bar' => 'date',
+    ];
+}
+```
+Even though `Related` is not an indexed model class the mapping creation will include the custom mappings as defined in the `indexMappingProperties` of the `Related` class. The mappings dictionary of the parent will look as follows:
+```php
+[
+  // Parent property mappings 
+  'street' => ['type' => 'string'],
+  // Related property mappings
+  'related' => [
+    'type' => 'nested',
+    'properties' => [
+      'foo' => ['type' => 'integer'],
+      'bar' => ['type' => 'date'],
+    ],
+  ],
+]
+```
+
+Note that you could also directly specify a custom `related` property mapping on the `indexMappingProperties` of the parent class.
+But this would overwrite any mappings defined on the related class even the automatically determined mappings for the related class.
+```php
+class Parent extends ElodexModel
+{
+    protected $indexRelations = ['related'];
+    protected $indexMappingProperties = [
+      'bar' => 'date',
+      'related' => [
+        'type' => 'nested',
+        'properties' => [
+          'foo' => ['type' => 'string'],
+        ],
+      ]
+    ];
+}
+```
+No matter what you define on the related class, the resulting mapping entry for `related` will look like this:
+```php
+[
+  // Custom related property mappings
+  'related' => [
+    'type' => 'nested',
+    'properties' => [
+      'foo' => ['type' => 'string'],
+    ],
+  ],
+]
+```
 
 
 ### Indexing Model Relationships
