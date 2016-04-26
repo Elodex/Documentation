@@ -6,7 +6,7 @@ Elodex currently only supports [term suggesters][Elasticsearch Suggesters - Term
 Note that all suggestions are index specific but not type specific.
 In other words a suggestion query will always return results from all your indexed models.
 
-The response data of a suggestion query is always a `SuggestResult` instance which itself contains a dictionary of the suggestions.
+The response data of a suggestion query is always a `SuggestResult` instance which itself contains a dictionary for the suggestions data.
 See the official [Elasticsearch documentation][Elasticsearch Suggesters] on how the dictionary is structured.
 
 
@@ -21,7 +21,7 @@ $results = User::indexSearch()
 ```
 
 The first parameter of `suggestTerm` is a custom identifier for the suggestion which is needed to access the wanted suggestion in the suggestion result.
-The search results object itself contains the [suggestion result][Elodex Search Results - Suggestions] as part of the response. It can be retreived with the `getSuggestions` method and will returns an instance of `SuggestResult`.
+The search results object itself contains the [suggestion result][Elodex Search Results - Suggestions] as part of the response. It can be retreived with the `getSuggestions` method and returns a `SuggestResult` instance.
 
 ```php
 $results->getSuggestions();
@@ -29,10 +29,9 @@ $results->getSuggestions();
 
 
 ## Separate Suggest Request
-Standalone suggest requests are different from standard search requests and use the `Suggest` query class.
-There's no convenient way to create a suggest query through an indexed model class since suggestions are never specific to a model class.
+Standalone suggest requests are different from standard search requests and use the `Suggest` query class.  
+The static `create` method can be used to create a new `Suggest` instance with the default index manager:
 
-Instead you simply create a new `Suggest` instance:
 ```php
 $results = Suggest::create()
   ->term('my-suggestion-1', 'Adrian')
@@ -41,6 +40,14 @@ $results = Suggest::create()
 ```
 
 The `get` method performs the query and returns a `SuggestResult` instance.
+
+Suggestion requests are not specific to a type but only to an index.
+If you want to run a suggestion query on a different index you can do so by specifying an index parameter in the `get` call:
+```php
+$results = Suggest::create()
+  ->term('town-suggestion', 'Spring')
+  ->get('town_index');
+```
 
 
 

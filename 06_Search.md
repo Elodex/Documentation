@@ -127,13 +127,12 @@ As explained in the _Indexing Model Relationships_ section relationships are by 
 This means that you have to use [nested queries][Elasticsearch DSL nested query] if you want to search in fields of your nested documents.
 
 ```php
-// Add a query for the 'comment' relationship of the user.
+// Create a query for the 'comment' relationship of the user.
 $commentQuery = new WildcardQuery('comment.description', "*hello*");
-$nestedQuery = new NestedQuery('comment', $commentQuery);
 
-$search = User::indexSearch()->addQuery($nestedQuery);
-
-$results = $search->get();
+$results = User::indexSearch()
+  ->nestedQuery('comment', $commentQuery)  // add the nested query for the 'comment' relation
+  ->get();
 ```
 
 
@@ -183,14 +182,14 @@ Model::indexSearch()
 
 
 ### Sorting and Result Limit
-Sorting basically works like you should be used to from Eloquent queries:
+[Sorting][Elasticsearch search request sort] basically works like it does with Eloquent queries:
 ```php
 Model::indexSearch()
-  ->sort('first_name')
-  ->sort('last_name', 'desc');
+  ->orderBy('first_name')
+  ->orderBy('last_name', 'desc');
 ```
 
-Offsets and limiting the number of search results works as well:
+Offsets and limiting the number of search results are available as well:
 ```php
 Model::indexSearch()
   ->offset(5)
@@ -204,6 +203,7 @@ Model::indexSearch()
 [Elasticsearch DSL match all]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html "Elasticsearch DSL match all"
 [Elasticsearch bool query]: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html "Elasticsearch bool query"
 [Elasticsearch pagination]: https://www.elastic.co/guide/en/elasticsearch/guide/current/pagination.html "Elasticsearch pagination"
+[Elasticsearch search request sort]: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html "Elasticsearch Sort"
 [Laravel Pagination]: https://laravel.com/docs/5.2/pagination#displaying-results-in-a-view "Laravel Pagination"
 [Elodex highlighting]: 07_Highlighting.md "Elodex Highlighting"
 [Elodex suggestions]: 09_Suggestions.md "Elodex Suggestions"
