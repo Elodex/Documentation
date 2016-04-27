@@ -145,9 +145,9 @@ $results = User::indexSearch()
   ->paginate(5);
 ```
 The paginator will return the documents of the search result by default if you iterate through the elements.  
-If you need the model instances to be loaded from the DB you can call the `getItems` method just like you can on the `SearchResult` instance itself.
+If you need the model instances to be loaded from the DB you can call the `getModels` method just like you can on the `SearchResult` instance itself.
 ```php
-$users = $results->getItems();
+$users = $results->getModels();
 ```
 Accessing the underlying search result instance is possible through the `getSearchResult` method.
 
