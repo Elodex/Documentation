@@ -165,10 +165,10 @@ Here's a brief list of all queries combined into one search, for a more detailed
 Modell::indexSearch()
   ->term('first_name', 'term')
   ->terms('first_name', ['term1', 'term2'])
-  ->commonTerms('last_name', 'this is bonsai cool')
+  ->commonTerms('description', 'this is bonsai cool')
   ->prefix('last_name', 'Mill')
-  ->match('street', 'this is a test')
-  ->multiMatch(['first_name', 'last_name'], 'this is a test')
+  ->match('street', 'main street')
+  ->multiMatch(['first_name', 'last_name'], 'john')
   ->regexp('city', '[a-zA-Z]+')
   ->wildcard('country', 'a*')
   ->fuzzy('description', 'ki')
@@ -178,7 +178,7 @@ Modell::indexSearch()
 A [match all query][Elasticsearch DSL match all] is available as well:
 ```php
 Model::indexSearch()
-  ->match_all();
+  ->matchAll();
 ```
 
 
