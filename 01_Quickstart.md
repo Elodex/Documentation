@@ -9,7 +9,7 @@ However if you want to integrate Elodex in your production code you certainly sh
 
 ## 1. Add Elodex to your Composer File
 ```bash
-$ composer require "elodex/elodex=~1.0"
+$ composer require "elodex/elodex=~1.1"
 ```
 
 **Note**: If you want to use a development version instead of the latest stable version add the following stability setting to your `composer.json` file:
