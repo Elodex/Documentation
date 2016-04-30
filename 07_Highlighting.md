@@ -14,7 +14,7 @@ $result = User::indexSearch()
     ->get();
 ```
 
-Highlights are returned as a part of the [search result metadata][Elodex Search Results Metadata].
+Highlights are returned as a part of the [search result metadata](06_Search.md#metadata).
 You can access the highlights either through the metadata dictionary returned by the `getMetadata` method or by using the `getHighlight` method which will return the highlighted fields for a specific document.
 ```php
 $highlights = $result->getHighlight($modelId);
@@ -42,4 +42,3 @@ The resulting dictionary will look like this:
 
 
 [Elasticsearch Highlighting]: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-highlighting.html "Elasticsearch Highlighting"
-[Elodex Search Results Metadata]: https://github.com/Elodex/Documentation/blob/develop/06_Search.md#metadata "Elodex Search Results Metadata"

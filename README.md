@@ -15,5 +15,5 @@ The Changelog can be found [here][Elodex Changelog].
 10. [Artisan Commands](https://github.com/Elodex/Documentation/blob/develop/10_Artisan-Commands.md)
 
 
-[Elodex]: https://github.com/elodex/elodex/tree/develop "Elodex Property Mappings"
-[Elodex Changelog]: https://github.com/Elodex/Elodex/blob/develop/CHANGELOG.md "Elodex Changelog"
+[Elodex]: https://github.com/elodex/elodex/ "Elodex Property Mappings"
+[Elodex Changelog]: https://github.com/Elodex/Elodex/blob/master/CHANGELOG.md "Elodex Changelog"
