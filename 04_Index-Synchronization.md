@@ -66,60 +66,21 @@ Generally speaking: there're very few reasons to use partial updates at all due 
 Elasticsearch will always internally perform a full document update anyways.
 
 
-## Synchronizing Eloquent changes
+## Synchronizing Eloquent Changes
 Once you've filled your index repositories with your existing Eloquent models you usually want to keep your index in sync with your database.
 
 This can be easily achieved by adding an [event subscriber][Laravel Event Subscribers] for all relevant Eloquent events.
-
-```php
-class IndexSyncHandler implements ShouldQueue
-{
-    public function onCreated($user)
-    {
-        $user->saveToIndex();
-    }
-
-    public function onSaved($user)
-    {
-        $user->saveToIndex();
-    }
-
-    public function onDeleted($user)
-    {
-        $user->removeFromIndex();
-    }
-
-    public function onRestored($user)
-    {
-        $user->saveToIndex();
-    }
-
-    public function subscribe($events)
-    {
-        $events->listen(
-            'eloquent.created: '.User::class, static::class.'@onCreated'
-        );
-
-        $events->listen(
-            'eloquent.saved: '.User::class, static::class.'@onSaved'
-        );
-
-        $events->listen(
-            'eloquent.deleted: '.User::class, static::class.'@onDeleted'
-        );
-
-        $events->listen(
-            'eloquent.restored: '.User::class, static::class.'@onRestored'
-        );
-    }
-}
+Elodex provides a method to [generate a default implementation](10_Artisan-Commands.md#creating-eloquent-Synchronization-handlers) for your model classes.
+```bash
+$ php artisan make:es:sync-handler Model
 ```
+You can then add the generated synchronization handler to the list of subscribers in your `EventServiceProvider` class.
 
-You might have noticed that `ShouldQueue` is used which will cause all event methods to be called on a queue, most likely asynchronously unless you use the `Sync` queue.
+You might notice that `ShouldQueue` is used for the generated event subscriber which will cause all event methods to be called on a queue, most likely asynchronously unless you use the `Sync` queue.
 Using queued methods is highly recommended!
 
 Index operations may fail or throw exceptions and you don't want that to happen as part of a user's request cycle.
-Queues will automatically retry failed jobs, give you the opportunity to retry failed jobs and handle errors outside of the request cycle.
+Queues will automatically retry failed jobs depending on your queue configuration and they make it possible for you to handle job failures outside the user's request cycle.
 
 
 ## Synchronizing Index Relationships
