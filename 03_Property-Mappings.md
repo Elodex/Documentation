@@ -75,6 +75,8 @@ class Parent extends ElodexModel
 {
     protected $casts = ['street' => 'string'];
     protected $indexRelations = ['related'];
+
+    ...
 }
 
 class Related extends EloquentModel
@@ -83,6 +85,8 @@ class Related extends EloquentModel
     protected $indexMappingProperties = [
       'bar' => 'date',
     ];
+
+    ...
 }
 ```
 Even though `Related` is not an indexed model class the mapping creation will include the custom mappings as defined in the `indexMappingProperties` of the `Related` class. The mappings dictionary of the parent will look as follows:

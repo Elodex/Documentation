@@ -45,27 +45,6 @@ User::all()->removeFromIndex();
 ```
 
 
-## Partial Updates
-Partially updating your model is supported through the `updateIndex` method.
-
-```php
-$user->updateIndex();
-```
-
-It uses the `getChangedIndexDocument` on your model to create a document of changed attributes which will be used for the update operation.
-The standard implementation of this method temporarily hides all unchanged attributes and then serializes attributes just like the `toArray` method does.
-
-`getChangedIndexDocument` does not include any relationships or changed data from relationships.
-This is because Eloquent doesn't have a tight binding between parents and their related models besides the ability to touch the timestamp of parents.
-
-In other words: ***Partial updates are not supported for models with indexed relationships!***
-
-If you partially update a model with indexed relationships it might become inconsistent because their related models didn't get updated in the nested documents.
-
-Generally speaking: there're very few reasons to use partial updates at all due to the fact [how partial updates work in Elasticsearch][Elasticsearch partial updates].
-Elasticsearch will always internally perform a full document update anyways.
-
-
 ## Synchronizing Eloquent Changes
 Once you've filled your index repositories with your existing Eloquent models you usually want to keep your index in sync with your database.
 
@@ -118,6 +97,28 @@ If the user _John Doe_ changes, all comment entries containing this user have to
 
 So let's say you've got 1000 comments which belong to 1 user, that would mean 1001 documents have to be updated if this user changes.
 That's something you should keep in mind if you decide to use relationships in indices.
+
+
+## Partial Updates
+Partially updating models is supported through the `updateIndex` method.
+
+```php
+$user->updateIndex();
+```
+
+It uses the `getChangedIndexDocument` method to create a document of changed attributes which will be used for the update operation.
+The standard implementation of this method temporarily hides all unchanged attributes and then serializes all attributes just like the `toArray` method does.
+
+`getChangedIndexDocument` does not include any relationships or changed data from relationships.
+This is because Eloquent doesn't have a tight binding between parents and their related models besides the ability to touch the timestamp of parents.
+
+In other words: ***Partial updates are not supported for models with indexed relationships!***
+
+If you partially update a model with indexed relationships it might become inconsistent because their related models didn't get updated in the nested documents.
+
+Generally speaking: there're very few reasons to use partial updates at all due to the fact [how partial updates work in Elasticsearch][Elasticsearch partial updates].
+Elasticsearch will always internally perform a full document update anyways.
+
 
 [Laravel Event Subscribers]: https://laravel.com/docs/5.2/events#event-subscribers "Laravel Event Subscribers"
 [Elasticsearch bulk API]: https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html "Elasticsearch bulk API"
