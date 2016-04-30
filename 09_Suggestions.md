@@ -21,7 +21,7 @@ $results = User::indexSearch()
 ```
 
 The first parameter of `suggestTerm` is a custom identifier for the suggestion which is needed to access the wanted suggestion in the suggestion result.
-The search results object itself contains the [suggestion result][Elodex Search Results - Suggestions] as part of the response. It can be retreived with the `getSuggestions` method and returns a `SuggestResult` instance.
+The search results object itself contains the [suggestion result](06_Search.md#suggestions) as part of the response. It can be retreived with the `getSuggestions` method and returns a `SuggestResult` instance.
 
 ```php
 $results->getSuggestions();
@@ -53,4 +53,3 @@ $results = Suggest::create()
 
 [Elasticsearch Suggesters]: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html "Elasticsearch Suggesters"
 [Elasticsearch Suggesters - Term]: https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters-term.html "Elasticsearch Suggesters - Term"
-[Elodex Search Results - Suggestions]: https://github.com/Elodex/Documentation/blob/develop/06_Search.md#suggestions "Elodex Search Results - Suggestions"
