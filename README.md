@@ -3,16 +3,16 @@
 Official [Elodex][Elodex] documentation.
 The Changelog can be found [here][Elodex Changelog].
 
-1. [Quickstart](https://github.com/Elodex/Documentation/blob/develop/01_Quickstart.md)
-2. [Index Management](https://github.com/Elodex/Documentation/blob/develop/02_Index-Management.md)
-3. [Property Mappings](https://github.com/Elodex/Documentation/blob/develop/03_Property-Mappings.md)
-4. [Index Synchronization](https://github.com/Elodex/Documentation/blob/develop/04_Index-Synchronization.md)
-5. [Document Creation](https://github.com/Elodex/Documentation/blob/develop/05_Document-Creation.md)
-6. [Search](https://github.com/Elodex/Documentation/blob/develop/06_Search.md)
-7. [Highlighting](https://github.com/Elodex/Documentation/blob/develop/07_Highlighting.md)
-8. [Scrolling](https://github.com/Elodex/Documentation/blob/develop/08_Scrolling.md)
-9. [Suggestions](https://github.com/Elodex/Documentation/blob/develop/09_Suggestions.md)
-10. [Artisan Commands](https://github.com/Elodex/Documentation/blob/develop/10_Artisan-Commands.md)
+1. [Quickstart](01_Quickstart.md)
+2. [Index Management](02_Index-Management.md)
+3. [Property Mappings](03_Property-Mappings.md)
+4. [Index Synchronization](04_Index-Synchronization.md)
+5. [Document Creation](05_Document-Creation.md)
+6. [Search](06_Search.md)
+7. [Highlighting](07_Highlighting.md)
+8. [Scrolling](08_Scrolling.md)
+9. [Suggestions](09_Suggestions.md)
+10. [Artisan Commands](10_Artisan-Commands.md)
 
 
 [Elodex]: https://github.com/elodex/elodex/ "Elodex Property Mappings"
