@@ -140,6 +140,7 @@ If no namespace is included in the `name` parameter for the model class, the `Ap
 
 The default implementation of the generated subscriber class already provides almost everything you need for a proper synchronization of your Eloquent model class with the index.
 There're only two custom implementations that usually need to be added:
+
 1. The synchronization of indexed relationships as [described here](04_Index-Synchronization.md#synchronizing-index-relationships).
 2. A proper job failure handling in the `failed` method.
 

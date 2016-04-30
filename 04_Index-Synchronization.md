@@ -70,7 +70,7 @@ Elasticsearch will always internally perform a full document update anyways.
 Once you've filled your index repositories with your existing Eloquent models you usually want to keep your index in sync with your database.
 
 This can be easily achieved by adding an [event subscriber][Laravel Event Subscribers] for all relevant Eloquent events.
-Elodex provides a method to [generate a default implementation](10_Artisan-Commands.md#creating-eloquent-Synchronization-handlers) for your model classes.
+Elodex provides a method to [generate a default implementation](10_Artisan-Commands.md#creating-eloquent-synchronization-handlers) for your model classes.
 ```bash
 $ php artisan make:es:sync-handler Model
 ```
