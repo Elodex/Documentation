@@ -162,7 +162,7 @@ The last two optional parameters are usually the the bool operator and the array
 ### Available Search Queries
 Here's a brief list of all queries combined into one search, for a more detailed list and description see the `Search` class and the [Elasticsearch DSL library][Elasticsearch DSL library]:
 ```php
-Modell::indexSearch()
+Model::indexSearch()
   ->term('first_name', 'term')
   ->terms('first_name', ['term1', 'term2'])
   ->commonTerms('description', 'this is bonsai cool')
@@ -183,7 +183,7 @@ Model::indexSearch()
 
 
 ### Sorting and Result Limit
-[Sorting][Elasticsearch search request sort] basically works like it does with Eloquent queries:
+[Sorting][Elasticsearch search request sort] works smiliar to the ordering in Eloquent:
 ```php
 Model::indexSearch()
   ->orderBy('first_name')
