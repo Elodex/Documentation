@@ -1,5 +1,12 @@
 # Index Synchronization
 
+## Seeding
+Seeding should usually take place outside of a request cycle since this operation is expected to be a resource intensive and relatively long running task.
+It should usually done while the application is in maintenance mode and with an Artisan command.
+
+Elodex provides such an [Artisan command](10_Artisan-Commands.md#seeding) to seed all your existing data to the index and is prepared to work with a large number of elements.
+
+
 ## Adding Models to the Index
 To add the document of a single model to your default index repository you can call `addToIndex` on the model instance.
 ```php
@@ -32,7 +39,7 @@ The bulk operation exception instance will contain a list of failed items which 
 It's the programmers responsibility to catch and handle the `BulkOperationException` and to bring the index back to a consistent state.
 
 
-### Removing Models from the Index
+## Removing Models from the Index
 To remove a model's document from its index repository just call `removeFromIndex` on the instance.
 
 ```php

@@ -80,6 +80,20 @@ $ php artisan es:open-index
 ```
 
 
+## Seeding
+To seed **all** indexed models of one ore more model class use the `es:seed` command.
+```bash
+$ php artisan es:seed Model
+```
+The first parameter accepts a comma separated list of indexed model classes to seed multiple classes.
+```bash
+$ php artisan es:seed Model1,Model2
+```
+
+The command will fail if the index is not empty and any of the models to seed already exists.
+You can use the `--save` parameter to add or replace any existing indexed models, this will however not clean the index before the saving takes place.
+
+
 ## Show Index Mappings
 To display an overview of all index mappings which have been set for your types use the `es:get-mappings` command.
 
