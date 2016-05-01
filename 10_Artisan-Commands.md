@@ -15,13 +15,18 @@ $ php artisan es:create-index
 
 The command will not overwrite an existing index by default but rather fail.
 If you want to force the deletion of existing indices the parameter `--reset` can be used.
-
 ```bash
 $ php artisan es:create-index --reset
 ```
 
-Note that this command does not create any property mappings for you.
-You can however derive from the `Elodex\Console\CreateIndex` class and override the `createIndex` method to create your custom application specific index creation command.
+Note that this command does not create any property mappings unless you use the `--models` parameter.
+```bash
+$ php artisan es:create-index --models=User,Company
+```
+
+### Custom Index Creation Command
+You can derive from the `Elodex\Console\CreateIndex` class and override the `createIndex` method to create your custom application specific index creation command.
+One use case could be if you do not want to specify all model classes via command line parameter or if you want to add custom settings.
 
 ```php
 <?php
@@ -34,21 +39,47 @@ class CreateIndex extends BaseCreateIndex
 {
     ...
 
-    protected function createIndex($indexName, $settings)
+    protected function createIndex($indexName, $settings, array $models = [])
     {
         $settings = array_merge($settings, [
             // put our settings here
         ]);
-        $mappings = [
-            // put your mappings here
-        ];
+        $models = [\App\User::class, \App\Company::class];
+
+        parent::createIndex($indexName, $settings, $models);
 
         $this->indexManager->createIndex($indexName, $settings, $mappings);
     }
 ```
-
 The parent class automatically makes an index manager instance available which can be used for all index management operations.
 Consult the [Laravel documentation][Laravel Artisan] on how to make the Artisan command available to your application.
+
+The method to get the property mappings `getPropertyMappings` can be overriden as well.
+```php
+    protected function getPropertyMappings(array $models = [])
+    {
+        $mappings = array_merge(parent::getPropertyMappings($models), [
+            // put your mappings here
+        ]);
+
+        return $mappings
+    }
+```
+
+The structure of property mappings is defined by [Elasticsearch][Elasticsearch create indices - mappings]:
+```php
+$mappings = [
+    'type_1' => [
+        'properties' => [ ... ],
+    ],
+    'type_2' => [
+        'properties' => [ ... ],
+    ],
+],
+```
+
+The type names `type_1` and `type_2` in this example should usually be determined using the `getIndexTypeName` method of your models rather than explicitily specifying them.
+For an in-depth description about index creations in Elasticsearch take a look into the [Elasticsearch documentation][Elasticsearch create indices].
 
 
 ## Index Deletion
@@ -128,6 +159,15 @@ All Indices
 This command also supports a `--dump` parameter which will return the raw data returned by the Elasticsearch client.
 
 
+## Index Settings
+To show the settings for an index use the following command:
+```bash
+$ php artisan es:get-settings
+```
+
+Global custom analyzers will be printed as well.
+
+
 ## Analyze Command
 The `es:analyze` command helps you to quickly check the functionality of your analyzers.
 
@@ -162,3 +202,5 @@ There're only two custom implementations that usually need to be added:
 
 [Laravel Artisan]: https://laravel.com/docs/5.2/artisan "Laravel Artisan"
 [Laravel Event Subscribers]: https://laravel.com/docs/5.2/events#event-subscribers "Laravel Event Subscribers"
+[Elasticsearch create indices]: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html "Elasticsearch create indices"
+[Elasticsearch create indices - mappings]: https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#mappings "Elasticsearch create indices - mappings"
