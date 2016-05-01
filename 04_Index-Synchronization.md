@@ -2,7 +2,7 @@
 
 ## Seeding
 Seeding should usually take place outside of a request cycle since this operation is expected to be a resource intensive and relatively long running task.
-It should usually done while the application is in maintenance mode and with an Artisan command.
+Seeding should usually be done while the application is in maintenance mode and with an Artisan command.
 
 Elodex provides such an [Artisan command](10_Artisan-Commands.md#seeding) to seed all your existing data to the index and is prepared to work with a large number of elements.
 
