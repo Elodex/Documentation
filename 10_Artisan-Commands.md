@@ -47,8 +47,6 @@ class CreateIndex extends BaseCreateIndex
         $models = [\App\User::class, \App\Company::class];
 
         parent::createIndex($indexName, $settings, $models);
-
-        $this->indexManager->createIndex($indexName, $settings, $mappings);
     }
 ```
 The parent class automatically makes an index manager instance available which can be used for all index management operations.
