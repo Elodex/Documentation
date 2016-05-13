@@ -49,15 +49,16 @@ class CreateIndex extends BaseCreateIndex
         parent::createIndex($indexName, $settings, $models);
     }
 ```
-The parent class automatically makes an index manager instance available which can be used for all index management operations.
-Consult the [Laravel documentation][Laravel Artisan] on how to make the Artisan command available to your application.
+The parent class automatically makes an index manager instance available via the `indexManager` property which can be used for all index management operations.
+Consult the [Laravel documentation][Laravel Artisan] on how to make an Artisan command available to your application.
 
 The method to get the property mappings `getPropertyMappings` can be overriden as well.
+Even though it is usually unnecessary to do so since you can directly define custom [property mappings](03_Property-Mappings.md) on your model classes.
 ```php
     protected function getPropertyMappings(array $models = [])
     {
         $mappings = array_merge(parent::getPropertyMappings($models), [
-            // put your mappings here
+            // put your additional custom mappings here
         ]);
 
         return $mappings
